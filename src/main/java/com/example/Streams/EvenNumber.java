@@ -25,6 +25,10 @@ public class EvenNumber {
         List<String> names = Arrays.asList("navya", "anusha", "bob");
         names.stream().map(n -> n.toUpperCase()).forEach(System.out::println);
 
+        List<Integer> numbrs = Arrays.asList(1,2,3,4,6,7);
+        List<Integer> square = numbrs.stream().map(n -> n*n).toList();
+        System.out.println("squares of numbers: " +  square);
+
         //Find the first element starting with "A"
         Optional<String> nam = names.stream().filter(n -> n.startsWith("a")).findFirst();
         if (nam.isPresent()) {
@@ -79,11 +83,12 @@ public class EvenNumber {
 
         Set<Integer> duplicates = new HashSet<>();
         for (Integer dupp : list){
-            if (Collections.frequency(list, n) > 1){
+            if (Collections.frequency(list, dupp) > 1){
                 duplicates.add(dupp);
             }
         }
         System.out.println("duplicate elements using Collections.freq: " + duplicates);
+
         //Partition numbers into even and odd
         Map<Boolean, List<Integer>> numbers = nums.stream().
                 collect(Collectors.partitioningBy(m -> m%2 == 0));
@@ -92,10 +97,17 @@ public class EvenNumber {
 
         //Get average age of people
         List<AgeBased> people = Arrays.asList(new AgeBased("Tom", 20), new AgeBased("Jerry", 30));
+        double age = people.stream().mapToInt(p -> p.getAge()).average().orElse(0.0);
+        System.out.println("average age of people: "+ age);
+
+        double ages = people.stream().mapToInt(AgeBased::getAge).average().orElse(0.0);
+        System.out.println("avg age of people: " + ages);
 
         //Create a map from list of persons using name as key
         List<AgeBased> peoples = Arrays.asList(new AgeBased("Tom", 20), new AgeBased("Jerry", 30));
-
+        Map<String, AgeBased> ppl = peoples.stream()
+                .collect(Collectors.toMap(p -> p.getName(), p -> p));
+        System.out.println("List of persons using name as key: "+ ppl);
     }
 
 }
