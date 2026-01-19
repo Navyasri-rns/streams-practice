@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -58,9 +59,14 @@ public class Practice {
 
         //Find the Most Frequent Character in a String
         String input = "mississippi";
-        Map<Character, Long> mostFrq = input.chars().mapToObj(c -> (char) c).collect(Collectors.groupingBy(Function.identity(), Collectors.counting()));
+        Map<Character, Long> mostFrq = input.chars().mapToObj(c -> (char) c).collect(Collectors.groupingBy(Function.identity(),
+                Collectors.counting()));
         Map.Entry<Character, Long> output = mostFrq.entrySet().stream().max(Map.Entry.comparingByValue()).get();
         System.out.println("Most Freq Char: " + output);
+
+        char f = input.chars().mapToObj(c -> (char) c).collect(
+                Collectors.groupingBy(Function.identity(), Collectors.counting())).entrySet().stream().max(Map.Entry.comparingByValue()).get().getKey();
+        System.out.println("Most frequent character: " + f);
 
         //Check if a List of Words Contains a Palindrome
         List<String> wordsPalindrome = Arrays.asList("hello", "civic", "world");
@@ -73,9 +79,25 @@ public class Practice {
 
         //Find the First Non-Repeated Character in a String
         String inp = "success";
-        Character nonRepeating = inp.chars().mapToObj(c -> (char) c).collect(Collectors.groupingBy(Function.identity(), LinkedHashMap::new, Collectors.counting()))
+        Character nonRepeating = inp.chars().mapToObj(c -> (char) c).collect(Collectors.groupingBy(Function.identity(),
+                        LinkedHashMap::new, Collectors.counting()))
                 .entrySet().stream().filter(e -> e.getValue()==1).map(Map.Entry::getKey).findFirst().orElse(null);
-        System.out.print("Non Repeating Character: " + nonRepeating);
+        System.out.println("Non Repeating Character: " + nonRepeating);
 
+
+        //Check String is Palindrome
+        String s = "madam";
+        boolean b = IntStream.range(0, s.length()/2).allMatch(i -> s.charAt(i) == s.charAt(s.length()-i-1));
+        System.out.print("String is Palindrome: ");
+        if(b){
+            System.out.println(true);
+        } else {
+            System.out.println(false);
+        }
+
+        //frequency of all characters
+        String n = "navyasri edharapu";
+        Map<Character, Long> cnt = n.chars().mapToObj(s2->(char)s2).filter(s2->s2!=' ').collect(Collectors.groupingBy(s2->s2, Collectors.counting()));
+        System.out.println(cnt);
     }
 }

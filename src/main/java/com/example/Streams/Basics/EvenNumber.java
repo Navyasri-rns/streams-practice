@@ -21,10 +21,14 @@ public class EvenNumber {
         num.stream().filter(n -> n%2==0)
                 .forEach(System.out::println);
 
+        List<Integer> mm = num.stream().filter(n->n%2==0).toList();
+        System.out.println("Even numbers: " + mm);
+
         //Convert list of strings to uppercase
         List<String> names = Arrays.asList("navya", "anusha", "bob");
         names.stream().map(n -> n.toUpperCase()).forEach(System.out::println);
 
+        //squares of numbers
         List<Integer> numbrs = Arrays.asList(1,2,3,4,6,7);
         List<Integer> square = numbrs.stream().map(n -> n*n).toList();
         System.out.println("squares of numbers: " +  square);
@@ -51,6 +55,8 @@ public class EvenNumber {
         //Find the max value from a list
         Optional<Integer> i = nums.stream().max(Integer::compareTo);
         System.out.println("max value: " + i);
+        int numm = nums.stream().max(Comparator.naturalOrder()).get();
+        System.out.println("max number: " + numm);
 
         //Remove duplicate elements
         List<Integer> dup = nums.stream().distinct().toList();
@@ -66,6 +72,8 @@ public class EvenNumber {
 
         int n1 = nums.stream().mapToInt(Integer::intValue).sum();
         System.out.println("Sum of all numbers using sum: " +  n1);
+        int n3 = nums.stream().mapToInt(n33->n33).sum();
+        System.out.println("Sum of all numbers using summ: " +  n3);
 
         int[] sum = {0};
         nums.forEach(z -> sum[0] += z);
@@ -82,12 +90,18 @@ public class EvenNumber {
         System.out.println("duplicate elements: " + duplicate);
 
         Set<Integer> duplicates = new HashSet<>();
+        List<Integer> dupNums = list.stream().filter(nu -> !duplicates.add(nu)).distinct().toList();
+        System.out.println("efficent way for duplicate elements: " + dupNums);
+
         for (Integer dupp : list){
             if (Collections.frequency(list, dupp) > 1){
                 duplicates.add(dupp);
             }
         }
         System.out.println("duplicate elements using Collections.freq: " + duplicates);
+
+        List<Integer> dupNum = list.stream().filter(du -> Collections.frequency(list, du)>1).distinct().toList();
+        System.out.println("duplicate elements using list: " + dupNum);
 
         //Partition numbers into even and odd
         Map<Boolean, List<Integer>> numbers = nums.stream().
@@ -108,6 +122,14 @@ public class EvenNumber {
         Map<String, AgeBased> ppl = peoples.stream()
                 .collect(Collectors.toMap(p -> p.getName(), p -> p));
         System.out.println("List of persons using name as key: "+ ppl);
+
+        //start and end with vowel
+        String s = "i love india";
+        List<String> namee = Arrays.stream(s.split(" "))
+                .filter(w -> w.matches("(?i)^[aeiou]([a-z]*[aeiou])?$"))
+                .toList();
+        System.out.println("split: " + namee);
+
     }
 
 }
